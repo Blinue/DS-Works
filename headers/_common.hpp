@@ -1,4 +1,4 @@
-// DataStructureCore.hpp : Data Structure åº“å…±æœ‰å¤´æ–‡ä»¶
+// DataStructureCore.hpp : Data Structure ¿â¹²ÓĞÍ·ÎÄ¼ş
 //
 
 #pragma once
@@ -11,8 +11,8 @@
 
 namespace ds {
 
-// ä½¿ç”¨ ADL æŸ¥æ‰¾çš„ swap å‡½æ•°
-// ç”¨äº swap å‡½æ•°æˆå‘˜ä¸­
+// Ê¹ÓÃ ADL ²éÕÒµÄ swap º¯Êı
+// ÓÃÓÚ swap º¯Êı³ÉÔ±ÖĞ
 template <typename Ty> inline
 void _swap_adl(Ty &left, Ty &right) noexcept(noexcept(swap(left, right))) {
 	swap(left, right);

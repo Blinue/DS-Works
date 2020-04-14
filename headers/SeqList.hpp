@@ -1,4 +1,4 @@
-// SeqList.hpp : é¡ºåºè¡¨
+// SeqList.hpp : Ë³Ğò±í
 //
 
 #pragma once
@@ -11,7 +11,7 @@
 
 namespace ds {
 
-// ç±»å‹å®šä¹‰
+// ÀàĞÍ¶¨Òå
 template <typename Ty, typename Alloc>
 struct _SeqList_typename {
 	using allocator_type = Alloc;
@@ -19,7 +19,7 @@ struct _SeqList_typename {
 	using value_type = Ty;
 	static_assert(std::is_same_v<value_type,
 		typename std::allocator_traits<allocator_type>::value_type>,
-		"æœªå®šä¹‰è¡Œä¸ºï¼šallocator_type::value_type ä¸ Ty ä¸åŒ");
+		"Î´¶¨ÒåĞĞÎª£ºallocator_type::value_type Óë Ty ²»Í¬");
 	using pointer = typename std::allocator_traits<allocator_type>::pointer;
 	using reference = value_type & ;
 	using const_pointer = typename std::allocator_traits<allocator_type>::const_pointer;
@@ -29,16 +29,16 @@ struct _SeqList_typename {
 	using difference_type = ptrdiff_t;
 
 	using _data_type = struct {
-		value_type *base;		// å­˜å‚¨ç©ºé—´åŸºå€
-		size_type size;			// å½“å‰å…ƒç´ æ•°é‡
-		size_type alloc_size;	// é¢„åˆ†é…ç©ºé—´å®¹é‡
+		value_type *base;		// ´æ´¢¿Õ¼ä»ùÖ·
+		size_type size;			// µ±Ç°ÔªËØÊıÁ¿
+		size_type alloc_size;	// Ô¤·ÖÅä¿Õ¼äÈİÁ¿
 	};
 };
 
-// é¡ºåºè¡¨çš„ const è¿­ä»£å™¨
+// Ë³Ğò±íµÄ const µü´úÆ÷
 template <typename Ty, typename Alloc>
 struct _SeqList_const_iterator {
-// ç±»å‹å®šä¹‰
+// ÀàĞÍ¶¨Òå
 	using iterator_category = std::random_access_iterator_tag;
 
 	using value_type = typename _SeqList_typename<Ty, Alloc>::value_type;
@@ -48,14 +48,14 @@ struct _SeqList_const_iterator {
 
 	using _data_type = typename _SeqList_typename<Ty, Alloc>::_data_type;
 
-// æ„é€ æ“ä½œ
+// ¹¹Ôì²Ù×÷
 	_SeqList_const_iterator(value_type * cur, const _data_type *data) :_cur(cur), _data(data) {
 		assert(_data != nullptr);
 		assert(_verify_valid(_cur));
 	}
 
 
-// éæˆå‘˜æ¯”è¾ƒæ“ä½œ
+// ·Ç³ÉÔ±±È½Ï²Ù×÷
 	template <typename Ty_, typename Alloc_>[[nodiscard]] friend
 	bool operator<(
 		const _SeqList_const_iterator<Ty_, Alloc_> &left,
@@ -113,27 +113,27 @@ struct _SeqList_const_iterator {
 		return !(left == right);
 	}
 
-// ç§»åŠ¨æ“ä½œ
+// ÒÆ¶¯²Ù×÷
 	_SeqList_const_iterator &operator++() {
-		assert(_verify_valid(_cur + 1));	// éå°¾åè¿­ä»£å™¨
+		assert(_verify_valid(_cur + 1));	// ·ÇÎ²ºóµü´úÆ÷
 
 		++_cur;
 		return *this;
 	}
 	[[nodiscard]] _SeqList_const_iterator operator++(int) {
-		assert(_verify_valid(_cur + 1));	// éå°¾åè¿­ä»£å™¨
+		assert(_verify_valid(_cur + 1));	// ·ÇÎ²ºóµü´úÆ÷
 
 		return _SeqList_const_iterator(_cur++, _data);
 	}
 
 	_SeqList_const_iterator &operator--() {
-		assert(_verify_valid(_cur - 1));	// éé¦–å…ƒç´ çš„è¿­ä»£å™¨
+		assert(_verify_valid(_cur - 1));	// ·ÇÊ×ÔªËØµÄµü´úÆ÷
 
 		--_cur;
 		return *this;
 	}
 	[[nodiscard]] _SeqList_const_iterator operator--(int) {
-		assert(_verify_valid(_cur - 1));	// éé¦–å…ƒç´ çš„è¿­ä»£å™¨
+		assert(_verify_valid(_cur - 1));	// ·ÇÊ×ÔªËØµÄµü´úÆ÷
 
 		return _SeqList_const_iterator(_cur--, _data);
 	}
@@ -157,7 +157,7 @@ struct _SeqList_const_iterator {
 		return *this + (-off);
 	}
 
-// éæˆå‘˜ç§»åŠ¨æ“ä½œ
+// ·Ç³ÉÔ±ÒÆ¶¯²Ù×÷
 	template <typename Ty_, typename Alloc_> [[nodiscard]] friend
 	_SeqList_const_iterator<Ty_, Alloc_> operator+(
 		_SeqList_const_iterator<Ty_, Alloc_> it,
@@ -188,7 +188,7 @@ struct _SeqList_const_iterator {
 		return left._cur - right._cur;
 	}
 
-// è®¿é—®å…ƒç´ æ“ä½œ
+// ·ÃÎÊÔªËØ²Ù×÷
 	[[nodiscard]] const value_type &operator*() const {
 		return *_cur;
 	}
@@ -197,16 +197,16 @@ struct _SeqList_const_iterator {
 		return _cur;
 	}
 
-// æŒ‡å‘å…ƒç´ çš„æŒ‡é’ˆ
+// Ö¸ÏòÔªËØµÄÖ¸Õë
 	value_type *_cur;
 	const _data_type *_data;
 
-// è¾…åŠ©å‡½æ•°
-	// åˆ¤æ–­æŒ‡é’ˆæ˜¯å¦åˆæ³•
+// ¸¨Öúº¯Êı
+	// ÅĞ¶ÏÖ¸ÕëÊÇ·ñºÏ·¨
 	[[nodiscard]] bool _verify_valid(value_type *off) const {
 		return off >= _data->base && off <= _data->base + _data->size;
 	}
-	// åˆ¤æ–­ä¸¤è¿­ä»£å™¨æ˜¯å¦æŒ‡å‘åŒä¸€å®¹å™¨
+	// ÅĞ¶ÏÁ½µü´úÆ÷ÊÇ·ñÖ¸ÏòÍ¬Ò»ÈİÆ÷
 	[[nodiscard]] bool _verify_compare(const _SeqList_const_iterator &other) const {
 		return _data == other._data;
 	}
@@ -215,10 +215,10 @@ struct _SeqList_const_iterator {
 
 
 
-// é¡ºåºè¡¨è¿­ä»£å™¨
+// Ë³Ğò±íµü´úÆ÷
 template <typename Ty, typename Alloc>
 struct _SeqList_iterator : public _SeqList_const_iterator<Ty, Alloc> {
-// ç±»å‹å®šä¹‰
+// ÀàĞÍ¶¨Òå
 	using iterator_category = std::random_access_iterator_tag;
 
 	using value_type = typename _SeqList_typename<Ty, Alloc>::value_type;
@@ -228,30 +228,30 @@ struct _SeqList_iterator : public _SeqList_const_iterator<Ty, Alloc> {
 
 	using _data_type = typename _SeqList_typename<Ty, Alloc>::_data_type;
 
-// æ„é€ æ“ä½œ
+// ¹¹Ôì²Ù×÷
 	_SeqList_iterator(value_type *cur, const _data_type *data) : _SeqList_const_iterator<Ty, Alloc>(cur,data) {}
 
-// ç§»åŠ¨æ“ä½œ
+// ÒÆ¶¯²Ù×÷
 	_SeqList_iterator &operator++() {
-		assert((_SeqList_const_iterator<Ty, Alloc>::_verify_valid(_SeqList_const_iterator<Ty, Alloc>::_cur + 1)));	// éå°¾åè¿­ä»£å™¨
+		assert((_SeqList_const_iterator<Ty, Alloc>::_verify_valid(_SeqList_const_iterator<Ty, Alloc>::_cur + 1)));	// ·ÇÎ²ºóµü´úÆ÷
 
 		++_SeqList_const_iterator<Ty, Alloc>::_cur;
 		return *this;
 	}
 	[[nodiscard]] _SeqList_iterator operator++(int) {
-		assert((_SeqList_const_iterator<Ty, Alloc>::_verify_valid(_SeqList_const_iterator<Ty, Alloc>::_cur + 1)));	// éå°¾åè¿­ä»£å™¨
+		assert((_SeqList_const_iterator<Ty, Alloc>::_verify_valid(_SeqList_const_iterator<Ty, Alloc>::_cur + 1)));	// ·ÇÎ²ºóµü´úÆ÷
 
 		return _SeqList_iterator(_SeqList_const_iterator<Ty, Alloc>::_cur++, _SeqList_const_iterator<Ty, Alloc>::_data);
 	}
 
 	_SeqList_iterator &operator--() {
-		assert((_SeqList_const_iterator<Ty, Alloc>::_verify_valid(_SeqList_const_iterator<Ty, Alloc>::_cur - 1)));	// éé¦–å…ƒç´ è¿­ä»£å™¨
+		assert((_SeqList_const_iterator<Ty, Alloc>::_verify_valid(_SeqList_const_iterator<Ty, Alloc>::_cur - 1)));	// ·ÇÊ×ÔªËØµü´úÆ÷
 
 		--_SeqList_const_iterator<Ty, Alloc>::_cur;
 		return *this;
 	}
 	[[nodiscard]] _SeqList_iterator operator--(int) {
-		assert((_SeqList_const_iterator<Ty, Alloc>::_verify_valid(_SeqList_const_iterator<Ty, Alloc>::_cur - 1)));	// éé¦–å…ƒç´ è¿­ä»£å™¨
+		assert((_SeqList_const_iterator<Ty, Alloc>::_verify_valid(_SeqList_const_iterator<Ty, Alloc>::_cur - 1)));	// ·ÇÊ×ÔªËØµü´úÆ÷
 
 		return _SeqList_iterator(_SeqList_const_iterator<Ty, Alloc>::_cur--, _SeqList_const_iterator<Ty, Alloc>::_data);
 	}
@@ -275,7 +275,7 @@ struct _SeqList_iterator : public _SeqList_const_iterator<Ty, Alloc> {
 		return operator+=(-off);
 	}
 
-// éæˆå‘˜ç§»åŠ¨æ“ä½œ
+// ·Ç³ÉÔ±ÒÆ¶¯²Ù×÷
 	template <typename Ty_, typename Alloc_>[[nodiscard]] friend
 	_SeqList_iterator<Ty_, Alloc_> operator+(
 		_SeqList_iterator<Ty_, Alloc_> it,
@@ -296,7 +296,7 @@ struct _SeqList_iterator : public _SeqList_const_iterator<Ty, Alloc> {
 		return it + off;
 	}
 
-// è®¿é—®å…ƒç´ æ“ä½œ
+// ·ÃÎÊÔªËØ²Ù×÷
 	[[nodiscard]] Ty &operator*() const {
 		return *_SeqList_const_iterator<Ty, Alloc>::_cur;
 	}
@@ -309,10 +309,10 @@ struct _SeqList_iterator : public _SeqList_const_iterator<Ty, Alloc> {
 
 
 
-// é¡ºåºè¡¨
+// Ë³Ğò±í
 template <typename Ty, typename Alloc = std::allocator<Ty>>
 class SeqList {
-public: // ç±»å‹å®šä¹‰
+public: // ÀàĞÍ¶¨Òå
 	using allocator_type = typename _SeqList_typename<Ty, Alloc>::allocator_type;
 
 	using value_type = typename _SeqList_typename<Ty, Alloc>::value_type;
@@ -332,7 +332,7 @@ public: // ç±»å‹å®šä¹‰
 	using _data_type = typename _SeqList_typename<Ty, Alloc>::_data_type;
 
 
-public: // æ„é€ æ“ä½œ
+public: // ¹¹Ôì²Ù×÷
 	SeqList() noexcept(noexcept(allocator_type())) {
 		_init_alloc();
 	}
@@ -383,7 +383,7 @@ public: // æ„é€ æ“ä½œ
 	}
 
 	SeqList &operator=(const SeqList &other) {
-		// åˆ†é…å™¨
+		// ·ÖÅäÆ÷
 		std::allocator_traits<allocator_type>::select_on_container_copy_construction(other.get_allocator());
 
 		insert(begin(), other.begin(), other.end());
@@ -406,7 +406,7 @@ public: // æ„é€ æ“ä½œ
 		_data.alloc_size = 0;
 	}
 
-// éæˆå‘˜æ¯”è¾ƒæ“ä½œ
+// ·Ç³ÉÔ±±È½Ï²Ù×÷
 	template <typename Ty_, typename Alloc_> [[nodiscard]] friend
 	bool operator==(const SeqList<Ty_, Alloc_> &left, const SeqList<Ty_, Alloc_> &right) {
 		return std::equal(left.cbegin(), left.cend(), right.cbegin(), right.cend());
@@ -437,7 +437,7 @@ public: // æ„é€ æ“ä½œ
 		return !(left < right);
 	}
 
-// æ›¿æ¢å®¹å™¨çš„å†…å®¹
+// Ìæ»»ÈİÆ÷µÄÄÚÈİ
 	SeqList &assign(size_type count, const value_type &value) {
 		clear();
 		insert(begin(), count, value);
@@ -462,10 +462,10 @@ public: // æ„é€ æ“ä½œ
 		return *this;
 	}
 
-	// è¿”å›å…³è”çš„åˆ†é…å™¨
+	// ·µ»Ø¹ØÁªµÄ·ÖÅäÆ÷
 	[[nodiscard]] allocator_type get_allocator() const { return _allocator; }
 
-public: // è¿­ä»£å™¨
+public: // µü´úÆ÷
 	[[nodiscard]] iterator begin() noexcept { return iterator(_data.base, &_data); }
 	[[nodiscard]] const_iterator begin() const noexcept { return cbegin(); }
 	[[nodiscard]] const_iterator cbegin() const noexcept { return const_iterator(_data.base, &_data); }
@@ -482,18 +482,18 @@ public: // è¿­ä»£å™¨
 	[[nodiscard]] const_reverse_iterator rend() const noexcept { return crend(); }
 	[[nodiscard]] const_reverse_iterator crend() const noexcept { return std::make_reverse_iterator(cbegin()); }
 
-public: // å…ƒç´ è®¿é—®
+public: // ÔªËØ·ÃÎÊ
 	[[nodiscard]] value_type &at(size_type pos) {
 		if (pos >= 0 && pos < _data.size)
 			return _data.base[pos];
 		else
-			throw std::out_of_range("ä¸‹æ ‡è¶Šç•Œ");
+			throw std::out_of_range("ÏÂ±êÔ½½ç");
 	}
 	[[nodiscard]] const value_type &at(size_type pos) const {
 		if (pos >= 0 && pos < _data.size)
 			return _data.base[pos];
 		else
-			throw std::out_of_range("ä¸‹æ ‡è¶Šç•Œ");
+			throw std::out_of_range("ÏÂ±êÔ½½ç");
 	}
 
 	[[nodiscard]] value_type &operator[](size_type pos) {
@@ -513,8 +513,8 @@ public: // å…ƒç´ è®¿é—®
 	[[nodiscard]] value_type &back() { return *(end() - 1); }
 	[[nodiscard]] const value_type &back() const { return *(cend() - 1); }
 
-private: // è¾…åŠ©å‡½æ•°
-	// åˆ†é…åˆå§‹ç©ºé—´
+private: // ¸¨Öúº¯Êı
+	// ·ÖÅä³õÊ¼¿Õ¼ä
 	void _init_alloc(size_type count = _INIT_ALLOC_SIZE) {
 		assert(count >= 1);
 
@@ -522,7 +522,7 @@ private: // è¾…åŠ©å‡½æ•°
 		_data.alloc_size = count;
 	}
 
-	// æ‰©å±•ï¼ˆæ”¶ç¼©ï¼‰ç©ºé—´è‡³åˆšå¥½ä¸º count
+	// À©Õ¹£¨ÊÕËõ£©¿Õ¼äÖÁ¸ÕºÃÎª count
 	void _re_alloc(size_type count) {
 		assert(count >= _data.size);
 
@@ -540,54 +540,54 @@ private: // è¾…åŠ©å‡½æ•°
 		_data.alloc_size = count;
 	}
 
-	// å°†åˆ†é…ç©ºé—´æ‰©å±•åˆ°è‡³å°‘å¯å®¹çº³ count ä¸ªå…ƒç´ ï¼Œerase ä¸ºçœŸåˆ™æ“¦é™¤æ‰€æœ‰å…ƒç´ 
+	// ½«·ÖÅä¿Õ¼äÀ©Õ¹µ½ÖÁÉÙ¿ÉÈİÄÉ count ¸öÔªËØ£¬erase ÎªÕæÔò²Á³ıËùÓĞÔªËØ
 	template <bool erase = false>
 	void _inc_alloc(size_type count) {
-		if (_data.alloc_size == 0)	// æœªåˆ†é…ä»»ä½•ç©ºé—´
+		if (_data.alloc_size == 0)	// Î´·ÖÅäÈÎºÎ¿Õ¼ä
 			_init_alloc((count / _INIT_ALLOC_SIZE + 1) * _INIT_ALLOC_SIZE);
 		else {
-			if constexpr (erase)	// æ“¦é™¤æ‰€æœ‰å…ƒç´ 
+			if constexpr (erase)	// ²Á³ıËùÓĞÔªËØ
 				clear();
 
-			if (count > _data.alloc_size)	// éœ€åˆ†é…æ›´å¤§ç©ºé—´
+			if (count > _data.alloc_size)	// Ğè·ÖÅä¸ü´ó¿Õ¼ä
 				_re_alloc((count / _data.alloc_size + 1) * _data.alloc_size);
-			// count <= _alloc_size åˆ™ä¸åšä»»ä½•äº‹
+			// count <= _alloc_size Ôò²»×öÈÎºÎÊÂ
 		}
 	}
-public: // å®¹é‡
+public: // ÈİÁ¿
 
-	// æ£€æŸ¥çº¿æ€§è¡¨æ˜¯å¦ä¸ºç©º
+	// ¼ì²éÏßĞÔ±íÊÇ·ñÎª¿Õ
 	[[nodiscard]] bool empty() const noexcept { return !static_cast<bool>(_data.size); }
 
-	// è¿”å›çº¿æ€§è¡¨çš„å…ƒç´ æ•°
+	// ·µ»ØÏßĞÔ±íµÄÔªËØÊı
 	[[nodiscard]] size_type size() const noexcept { return _data.size; }
 
-	// è¿”å›æ­¤çº¿æ€§è¡¨å¯ä¿æœ‰å…ƒç´ çš„æœ€å¤§å€¼
+	// ·µ»Ø´ËÏßĞÔ±í¿É±£ÓĞÔªËØµÄ×î´óÖµ
 	[[nodiscard]] size_type max_size() const noexcept { return std::numeric_limits<size_type>::max(); }
 
-	// è¿”å›å½“å‰åˆ†é…å­˜å‚¨çš„å®¹é‡
+	// ·µ»Øµ±Ç°·ÖÅä´æ´¢µÄÈİÁ¿
 	[[nodiscard]] size_type capacity() const noexcept { return _data.alloc_size; }
 
-	// å¢å¤§çº¿æ€§è¡¨çš„å®¹é‡è‡³ new_cap
+	// Ôö´óÏßĞÔ±íµÄÈİÁ¿ÖÁ new_cap
 	SeqList &reserve(size_type new_cap) {
 		if (new_cap > max_size())
-			throw std::length_error("é¢„åˆ†é…çš„å®¹é‡è¿‡å¤§");
+			throw std::length_error("Ô¤·ÖÅäµÄÈİÁ¿¹ı´ó");
 		else if (new_cap > _data.alloc_size)
 			_re_alloc(new_cap);
-		// new_cap <= _alloc_size : ä¸åšä»»ä½•äº‹
+		// new_cap <= _alloc_size : ²»×öÈÎºÎÊÂ
 
 		return *this;
 	}
 
-	// ç§»é™¤æœªä½¿ç”¨çš„å®¹é‡
+	// ÒÆ³ıÎ´Ê¹ÓÃµÄÈİÁ¿
 	SeqList &shrink_to_fit() {
 		_re_alloc(_data.size);
 		return *this;
 	}
 
-public: // ä¿®æ”¹å™¨
+public: // ĞŞ¸ÄÆ÷
 
-	// ç§»é™¤æ‰€æœ‰å…ƒç´ 
+	// ÒÆ³ıËùÓĞÔªËØ
 	SeqList &clear() noexcept {
 		if (_data.size != 0) {
 			std::destroy_n(_data.base, _data.size);
@@ -597,9 +597,9 @@ public: // ä¿®æ”¹å™¨
 		return *this;
 	}
 
-private: // è¾…åŠ©å‡½æ•°
-	// ä¸º count ä¸ªæ’å…¥çš„å…ƒç´ é¢„ç•™ç©ºé—´
-	// è¿”å›å€¼ï¼šè¯¥é¢„ç•™ç©ºé—´çš„æŒ‡é’ˆ
+private: // ¸¨Öúº¯Êı
+	// Îª count ¸ö²åÈëµÄÔªËØÔ¤Áô¿Õ¼ä
+	// ·µ»ØÖµ£º¸ÃÔ¤Áô¿Õ¼äµÄÖ¸Õë
 	value_type *_enlarge_and_move(const_iterator pos, size_type count) {
 		if (capacity() == 0) {
 			_inc_alloc(count);
@@ -618,7 +618,7 @@ private: // è¾…åŠ©å‡½æ•°
 		return pt;
 	}
 public:
-// æ’å…¥å…ƒç´ åˆ°å®¹å™¨ä¸­æŒ‡å®šä½ç½®
+// ²åÈëÔªËØµ½ÈİÆ÷ÖĞÖ¸¶¨Î»ÖÃ
 	SeqList &insert(const_iterator pos, const value_type &value) {
 		assert(_valid_iterator(pos));
 		
@@ -669,7 +669,7 @@ public:
 		return *this;
 	}
 
-	// åŸä½æ„é€ å…ƒç´ 
+	// Ô­Î»¹¹ÔìÔªËØ
 	template <typename ...Args>
 	SeqList &emplace(const_iterator pos, Args &&...args) {
 		assert(_valid_iterator(pos));
@@ -682,10 +682,10 @@ public:
 		return *this;
 	}
 
-//ç§»é™¤æŒ‡å®šå…ƒç´ 
+//ÒÆ³ıÖ¸¶¨ÔªËØ
 	SeqList &erase(const_iterator pos) {
 		assert(_valid_iterator(pos));
-		assert(_valid_iterator(pos + 1));	// pos ä¸ä¸ºå°¾åè¿­ä»£å™¨
+		assert(_valid_iterator(pos + 1));	// pos ²»ÎªÎ²ºóµü´úÆ÷
 
 		erase(pos, pos + 1);
 
@@ -700,12 +700,12 @@ public:
 			std::destroy(first, last);
 			std::uninitialized_move(last._cur, end()._cur, first._cur);
 			_data.size -= std::distance(first, last);
-		} // first == last : ä¸åšä»»ä½•äº‹
+		} // first == last : ²»×öÈÎºÎÊÂ
 
 		return *this;
 	}
 
-// å°†æŒ‡å®šå…ƒç´ æ’å…¥åˆ°å®¹å™¨å°¾
+// ½«Ö¸¶¨ÔªËØ²åÈëµ½ÈİÆ÷Î²
 	SeqList &push_back(const value_type &value) {
 		insert(end(), value);
 
@@ -717,7 +717,7 @@ public:
 		return *this;
 	}
 
-	// åœ¨å®¹å™¨å°¾åŸä½æ„é€ å…ƒç´ 
+	// ÔÚÈİÆ÷Î²Ô­Î»¹¹ÔìÔªËØ
 	template <typename ...Args>
 	SeqList &emplace_back(Args &&...args) {
 		emplace(end(), std::forward<Args>(args)...);
@@ -725,7 +725,7 @@ public:
 		return *this;
 	}
 
-	// ç§»é™¤å®¹å™¨æœ€æœ«å…ƒç´ 
+	// ÒÆ³ıÈİÆ÷×îÄ©ÔªËØ
 	SeqList &pop_back() {
 		assert(_data.size >= 1);
 
@@ -734,7 +734,7 @@ public:
 		return *this;
 	}
 
-// é‡è®¾å®¹å™¨å¤§å°ä»¥å®¹çº³ count ä¸ªå…ƒç´ 
+// ÖØÉèÈİÆ÷´óĞ¡ÒÔÈİÄÉ count ¸öÔªËØ
 	SeqList &resize(size_type count) {
 		if (count > _data.size) {
 			_inc_alloc(count);
@@ -754,29 +754,29 @@ public:
 		return *this;
 	}
 
-	// ä¸ other äº¤æ¢å†…å®¹
+	// Óë other ½»»»ÄÚÈİ
 	SeqList &swap(SeqList &other) noexcept(std::allocator_traits<allocator_type>::propagate_on_container_swap::value
 		|| std::allocator_traits<allocator_type>::is_always_equal::value) 
 	{
 		std::swap(_data, other._data);
 
 		if (std::allocator_traits<allocator_type>::propagate_on_container_swap::value)
-			_swap_adl(_allocator, other._allocator);	// äº¤æ¢åˆ†é…å™¨
+			_swap_adl(_allocator, other._allocator);	// ½»»»·ÖÅäÆ÷
 
 		return *this;
 	}
 	
 	
-private: // ç§æœ‰æ•°æ®
-	_data_type _data{};	// åŸºå€ä¸å…ƒç´ æ•°é‡
+private: // Ë½ÓĞÊı¾İ
+	_data_type _data{};	// »ùÖ·ÓëÔªËØÊıÁ¿
 
-	allocator_type _allocator{};	// åˆ†é…å™¨
+	allocator_type _allocator{};	// ·ÖÅäÆ÷
 
-	static constexpr size_type _INIT_ALLOC_SIZE = 10;	// åˆå§‹åŒ–æ—¶é¢„åˆ†é…ç©ºé—´å®¹é‡
+	static constexpr size_type _INIT_ALLOC_SIZE = 10;	// ³õÊ¼»¯Ê±Ô¤·ÖÅä¿Õ¼äÈİÁ¿
 
-private:	// è¾…åŠ©å‡½æ•°
+private:	// ¸¨Öúº¯Êı
 
-	// åˆ¤æ–­è¿­ä»£å™¨æ˜¯å¦åˆæ³•
+	// ÅĞ¶Ïµü´úÆ÷ÊÇ·ñºÏ·¨
 	bool _valid_iterator(const_iterator it) {
 		return std::addressof(*it) >= _data.base && std::addressof(*it) <= _data.base + _data.size;
 	}
@@ -784,7 +784,7 @@ private:	// è¾…åŠ©å‡½æ•°
 }; // class SeqList<>
 
 
-// swap() çš„ SeqList ç‰¹åŒ–
+// swap() µÄ SeqList ÌØ»¯
 template <typename Ty, typename Alloc> inline
 void swap(SeqList<Ty, Alloc> &left, SeqList<Ty, Alloc> &right)
 	noexcept(noexcept(left.swap(right)))
