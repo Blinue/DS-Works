@@ -1,5 +1,5 @@
 #include <iostream>
-#include "headers/seq_list.hpp"
+#include "include/seq_list.hpp"
 
 int main()
 {
