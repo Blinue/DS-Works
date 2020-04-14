@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <memory>
 
 #include "_common.hpp"
 

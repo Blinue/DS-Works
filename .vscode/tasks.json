@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [{
+		"type": "shell",
+		"label": "C/C++: cl.exe build active file",
+		"dependsOn": "创建输出文件夹",
+		"command": "cl.exe",
+		"args": [
+			"/Zi",
+			"/EHsc",
+			"/std:c++17",
+			"/utf-8",
+			"/Fo:",
+			"${workspaceFolder}\\obj\\",
+			"/Fd:",
+			"${workspaceFolder}\\out\\",
+			"/Fe:",
+			"${workspaceFolder}\\out\\",
+			"${workspaceFolder}\\*.cpp"
+		],
+		"problemMatcher": [
+			"$msCompile"
+		],
+		"group": {
+			"kind": "build",
+			"isDefault": true
+		}
+	}, {
+		"type": "shell",
+		"label": "创建输出文件夹",
+		"command": "New-Item -Force -ItemType \"directory\" -Path ${workspaceFolder}\\out\\, ${workspaceFolder}\\obj\\"
+	}]
+}
