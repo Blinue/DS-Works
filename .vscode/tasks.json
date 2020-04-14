@@ -6,10 +6,10 @@
 		"dependsOn": "创建输出文件夹",
 		"command": "cl.exe",
 		"args": [
+			"/nologo",
 			"/Zi",
 			"/EHsc",
 			"/std:c++17",
-			"/utf-8",
 			"/Fo:",
 			"${workspaceFolder}\\obj\\",
 			"/Fd:",

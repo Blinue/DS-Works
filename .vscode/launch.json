@@ -7,7 +7,7 @@
 		"name": "(Windows) 启动",
 		"type": "cppvsdbg",
 		"request": "launch",
-		"program": "${workspaceFolder}/main.exe",
+		"program": "${workspaceFolder}/out/test.exe",
 		"args": [],
 		"stopAtEntry": false,
 		"cwd": "${workspaceFolder}",

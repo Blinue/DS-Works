@@ -1,4 +1,4 @@
-// _common.hpp : 公共头文件
+﻿// _common.hpp : 公共头文件
 //
 
 #pragma once
@@ -17,7 +17,7 @@ namespace ds
 template <typename Ty>
 inline void _swap_adl(Ty &left, Ty &right) noexcept(noexcept(swap(left, right)))
 {
-	swap(left, right);
+    swap(left, right);
 }
 
 } // namespace ds

@@ -1,4 +1,4 @@
-// avl_tree : AVL 树
+﻿// avl_tree : AVL 树
 //
 
 #pragma once
@@ -32,12 +32,12 @@ private:
 	_avl_tree_const_iterator(_node *node, bool is_end = false) : _ptr(node), _is_end(is_end) {}
 
 public:
-	value_type &operator*() const
+	[[nodiscard]] value_type &operator*() const
 	{
 		assert(!_is_end);
 		return _ptr->data;
 	}
-	value_type *operator->() const
+	[[nodiscard]] value_type *operator->() const
 	{
 		assert(!_is_end);
 		return &_ptr->data;
@@ -158,6 +158,10 @@ private:
 	};
 
 public:
+	avl_tree()
+	{
+	}
+
 	template <typename InputIt>
 	avl_tree(InputIt first, InputIt last)
 	{
@@ -348,7 +352,7 @@ public:
 	}
 
 	// 查找元素
-	const_iterator search(const value_type &val)
+	[[nodiscard]] const_iterator search(const value_type &val)
 	{
 		if (!_root)
 			return end();
@@ -498,7 +502,7 @@ public:
 		return true;
 	}
 
-	iterator begin()
+	[[nodiscard]] iterator begin()
 	{
 		if (!_root)
 			return {nullptr, true};
@@ -509,7 +513,7 @@ public:
 		return {p};
 	}
 
-	iterator end()
+	[[nodiscard]] iterator end()
 	{
 		if (!_root)
 			return {nullptr, true};
