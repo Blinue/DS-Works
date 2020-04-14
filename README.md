@@ -1,6 +1,12 @@
 # DS-Works
 
-使用C++编写的，STL风格的数据结构实现
+使用C++编写的，STL风格的数据结构实现。
+
+* AVL树：avl_tree
+* B树：b_tree
+* 红黑树：rb_tree
+* 顺序表：seq_list
+* 栈：stack
 
 ## 示例
 
@@ -22,3 +28,7 @@ std::cout << "\n"
           << std::distance(tree.begin(), tree.find(5));
 // 输出：3
 ```
+
+## 测试
+
+安装MSVC。在VSCode中运行生成任务，然后执行out/test.exe。
