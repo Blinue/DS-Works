@@ -8,6 +8,8 @@
 * 顺序表：seq_list
 * 栈：stack
 
+所有实现均为泛型且header-only
+
 ## 示例
 
 ``` c++
