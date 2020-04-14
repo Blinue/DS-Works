@@ -3,7 +3,7 @@
 使用C++编写的，STL风格的数据结构实现。
 
 * AVL树：avl_tree
-* B树：b_tree
+* B-树：b_tree
 * 红黑树：rb_tree
 * 顺序表：seq_list
 * 栈：stack

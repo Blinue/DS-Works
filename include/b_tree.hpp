@@ -28,7 +28,7 @@ private:
         std::array<_node *, Order + 1> child{}; // 子树指针
     };
 
-public:
+public: // 构造函数
     b_tree() = default;
 
     template <typename InputIt>
@@ -39,6 +39,7 @@ public:
     }
 
 private:
+    // 释放节点
     void _free_node(_node *node)
     {
         if (!node)
@@ -57,6 +58,7 @@ public:
     }
 
 private:
+    // 在一支中查找指定值
     std::pair<bool, size_t> _find_pos(const value_type &key, _node *node) const
     {
         assert(node);
@@ -79,6 +81,7 @@ private:
         _node *node;
         size_t pos;
     };
+    // 根据值查找节点
     _find_node_return_type _find_node(const value_type &key) const
     {
         if (!_root)
@@ -339,6 +342,7 @@ public:
         }
     } // void erase(const value_type &)
 
+    // 查找值
     std::pair<value_type *, value_type *> find(const value_type &key) const
     {
         auto [exist, node, pos] = _find_node(key);
@@ -363,6 +367,7 @@ private:
     }
 
 public:
+    // 遍历元素
     void traverse(std::function<void(const value_type &)> fn) const
     {
         _traverse_impl(_root, fn);

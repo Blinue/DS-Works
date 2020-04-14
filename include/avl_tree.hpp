@@ -32,6 +32,7 @@ private:
 	_avl_tree_const_iterator(_node *node, bool is_end = false) : _ptr(node), _is_end(is_end) {}
 
 public:
+	// 解引用
 	[[nodiscard]] value_type &operator*() const
 	{
 		assert(!_is_end);
@@ -157,7 +158,7 @@ private:
 		_node *right = nullptr;	 // 右子树
 	};
 
-public:
+public: // 构造函数
 	avl_tree()
 	{
 	}
@@ -502,6 +503,7 @@ public:
 		return true;
 	}
 
+	// 迭代器
 	[[nodiscard]] iterator begin()
 	{
 		if (!_root)

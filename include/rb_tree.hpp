@@ -13,12 +13,14 @@ namespace ds
 template <typename Ty>
 class rb_tree;
 
+// 迭代器
 template <typename Ty>
 class _rb_tree_const_iterator
 {
     friend class rb_tree<Ty>;
 
 public:
+    // 双向
     using iterator_category = std::bidirectional_iterator_tag;
     using value_type = Ty;
 
@@ -33,6 +35,7 @@ private:
     _rb_tree_const_iterator(_node *ptr, bool is_end = false) : _ptr(ptr), _is_end(is_end) {}
 
 public:
+    // 解引用
     const value_type &operator*()
     {
         assert(!_is_end);
@@ -45,6 +48,7 @@ public:
         return &_ptr->data;
     }
 
+    // 自增
     _rb_tree_const_iterator &operator++()
     {
         assert(!_is_end && _ptr != _null);
@@ -75,6 +79,7 @@ public:
         return ++tmp;
     }
 
+    // 自减
     _rb_tree_const_iterator &operator--()
     {
         if (_is_end)
@@ -116,9 +121,6 @@ private:
 }; // class _rb_tree_const_iterator<>
 
 template <typename Ty>
-typename _rb_tree_const_iterator<Ty>::_node *_rb_tree_const_iterator<Ty>::_null = rb_tree<Ty>::_null;
-
-template <typename Ty>
 bool operator==(const _rb_tree_const_iterator<Ty> &left, const _rb_tree_const_iterator<Ty> &right)
 {
     return left._ptr == right._ptr && left._is_end == right._is_end;
@@ -149,7 +151,7 @@ private:
     struct _node
     {
         value_type data;
-        char color; // ÑÕÉ«£º'R'-ºì£¬'B'-ºÚ
+        char color;
         _node *parent = _null;
         _node *left = _null;
         _node *right = _null;
@@ -560,6 +562,10 @@ typename rb_tree<Ty>::_node rb_tree<Ty>::_null_node = {{}, 'B', nullptr, nullptr
 template <typename Ty>
 typename rb_tree<Ty>::_node *rb_tree<Ty>::_null = &_null_node;
 
+template <typename Ty>
+typename _rb_tree_const_iterator<Ty>::_node *_rb_tree_const_iterator<Ty>::_null = rb_tree<Ty>::_null;
+
+// 推倒指引
 template <typename InputIt>
 rb_tree(InputIt, InputIt)->rb_tree<typename std::iterator_traits<InputIt>::value_type>;
 
