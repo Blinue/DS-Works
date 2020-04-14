@@ -1,4 +1,4 @@
-// DataStructureCore.hpp : Data Structure ¿â¹²ÓĞÍ·ÎÄ¼ş
+// _common.hpp : å…¬å…±å¤´æ–‡ä»¶
 //
 
 #pragma once
@@ -9,12 +9,14 @@
 #include <initializer_list>
 #include <iterator>
 
-namespace ds {
+namespace ds
+{
 
-// Ê¹ÓÃ ADL ²éÕÒµÄ swap º¯Êı
-// ÓÃÓÚ swap º¯Êı³ÉÔ±ÖĞ
-template <typename Ty> inline
-void _swap_adl(Ty &left, Ty &right) noexcept(noexcept(swap(left, right))) {
+// ä½¿ç”¨ ADL æŸ¥æ‰¾çš„ swap å‡½æ•°
+// ç”¨äº swap å‡½æ•°æˆå‘˜ä¸­
+template <typename Ty>
+inline void _swap_adl(Ty &left, Ty &right) noexcept(noexcept(swap(left, right)))
+{
 	swap(left, right);
 }
 

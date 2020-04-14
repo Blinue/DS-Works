@@ -1,130 +1,142 @@
-// Stack.hpp : Õ»
-// 
+// Stack.hpp : æ ˆ
+//
 
 #pragma once
 
-
 #include "_common.hpp"
-#include "SeqList.hpp"
+#include "seq_list.hpp"
 
+namespace ds
+{
 
-namespace ds {
-
-// Õ»
-// ÈİÆ÷ÊÊÅäÆ÷
-template <typename Ty, typename Container = ds::SeqList<Ty>>
-class Stack {
-public: // ÀàĞÍ¶¨Òå
+// æ ˆ
+// å®¹å™¨é€‚é…å™¨
+template <typename Ty, typename Container = ds::seq_list<Ty>>
+class stack
+{
+public: // ç±»å‹å®šä¹‰
 	using container_type = Container;
 
 	using value_type = typename container_type::value_type;
-	static_assert(std::is_same_v<Ty, value_type>, "Î´¶¨ÒåĞĞÎª£ºContainer::value_type Óë Ty ²»Í¬");
+	static_assert(std::is_same_v<Ty, value_type>, "æœªå®šä¹‰è¡Œä¸ºï¼šContainer::value_type ä¸ Ty ä¸åŒ");
 	using size_type = typename container_type::size_type;
 	using reference = typename container_type::reference;
 	using const_reference = typename container_type::const_reference;
 
-public: // ¹¹Ôì²Ù×÷
-	Stack() {}
+public: // æ„é€ æ“ä½œ
+	stack() {}
 
-	explicit Stack(const container_type &cont) :_container(cont) {}
+	explicit stack(const container_type &cont) : _container(cont) {}
 
-	explicit Stack(container_type &&cont) : _container(std::move(cont)) {}
+	explicit stack(container_type &&cont) : _container(std::move(cont)) {}
 
-	Stack(const Stack &other) = default;
+	stack(const stack &other) = default;
 
-	Stack(Stack &&other) = default;
-
-	template <typename Alloc, std::enable_if_t<std::uses_allocator_v<container_type, Alloc>>>
-	explicit Stack(const Alloc &alloc) : _container(alloc) {}
-	
-	template <typename Alloc, std::enable_if_t<std::uses_allocator_v<container_type, Alloc>>>
-	Stack(const container_type &cont, const Alloc &alloc) : _container(cont, alloc) {}
+	stack(stack &&other) = default;
 
 	template <typename Alloc, std::enable_if_t<std::uses_allocator_v<container_type, Alloc>>>
-	Stack(container_type &&cont, const Alloc &alloc) : _container(std::move(cont), alloc) {}
+	explicit stack(const Alloc &alloc) : _container(alloc) {}
 
 	template <typename Alloc, std::enable_if_t<std::uses_allocator_v<container_type, Alloc>>>
-	Stack(const Stack &other, const Alloc &alloc) : _container(other._container, alloc) {}
+	stack(const container_type &cont, const Alloc &alloc) : _container(cont, alloc) {}
 
 	template <typename Alloc, std::enable_if_t<std::uses_allocator_v<container_type, Alloc>>>
-	Stack(Stack &&other, const Alloc &alloc) : _container(std::move(other._container, alloc)) {}
+	stack(container_type &&cont, const Alloc &alloc) : _container(std::move(cont), alloc) {}
 
-	~Stack() = default;
+	template <typename Alloc, std::enable_if_t<std::uses_allocator_v<container_type, Alloc>>>
+	stack(const stack &other, const Alloc &alloc) : _container(other._container, alloc) {}
 
-	Stack &operator=(const Stack &) = default;
-	Stack &operator=(Stack &&) = default;
+	template <typename Alloc, std::enable_if_t<std::uses_allocator_v<container_type, Alloc>>>
+	stack(stack &&other, const Alloc &alloc) : _container(std::move(other._container, alloc)) {}
 
-public: // ·Ç³ÉÔ±±È½Ï²Ù×÷
-	template <typename Ty_, typename Container_> [[nodiscard]] friend
-	bool operator==(Stack<Ty_, Container_> &left, Stack<Ty_, Container_> &right) {
+	~stack() = default;
+
+	stack &operator=(const stack &) = default;
+	stack &operator=(stack &&) = default;
+
+public: // éæˆå‘˜æ¯”è¾ƒæ“ä½œ
+	template <typename Ty_, typename Container_>
+	[[nodiscard]] friend bool operator==(stack<Ty_, Container_> &left, stack<Ty_, Container_> &right)
+	{
 		return left._container == right._container;
 	}
 
-	template <typename Ty_, typename Container_> [[nodiscard]] friend
-	bool operator!=(Stack<Ty_, Container_> &left, Stack<Ty_, Container_> &right) {
+	template <typename Ty_, typename Container_>
+	[[nodiscard]] friend bool operator!=(stack<Ty_, Container_> &left, stack<Ty_, Container_> &right)
+	{
 		return left._container != right._container;
 	}
 
-	template <typename Ty_, typename Container_> [[nodiscard]] friend
-	bool operator<(Stack<Ty_, Container_> &left, Stack<Ty_, Container_> &right) {
+	template <typename Ty_, typename Container_>
+	[[nodiscard]] friend bool operator<(stack<Ty_, Container_> &left, stack<Ty_, Container_> &right)
+	{
 		return left._container < right._container;
 	}
 
-	template <typename Ty_, typename Container_> [[nodiscard]] friend
-	bool operator<=(Stack<Ty_, Container_> &left, Stack<Ty_, Container_> &right) {
+	template <typename Ty_, typename Container_>
+	[[nodiscard]] friend bool operator<=(stack<Ty_, Container_> &left, stack<Ty_, Container_> &right)
+	{
 		return left._container <= right._container;
 	}
 
-	template <typename Ty_, typename Container_> [[nodiscard]] friend
-	bool operator>(Stack<Ty_, Container_> &left, Stack<Ty_, Container_> &right) {
+	template <typename Ty_, typename Container_>
+	[[nodiscard]] friend bool operator>(stack<Ty_, Container_> &left, stack<Ty_, Container_> &right)
+	{
 		return left._container > right._container;
 	}
 
-	template <typename Ty_, typename Container_> [[nodiscard]] friend
-	bool operator>=(Stack<Ty_, Container_> &left, Stack<Ty_, Container_> &right) {
+	template <typename Ty_, typename Container_>
+	[[nodiscard]] friend bool operator>=(stack<Ty_, Container_> &left, stack<Ty_, Container_> &right)
+	{
 		return left._container >= right._container;
 	}
 
-public: // ÔªËØ·ÃÎÊ
-	[[nodiscard]] value_type &top() {
+public: // å…ƒç´ è®¿é—®
+	[[nodiscard]] value_type &top()
+	{
 		assert(size() >= 1);
 
 		return _container.back();
 	}
-	[[nodiscard]] const value_type &top() const {
+	[[nodiscard]] const value_type &top() const
+	{
 		assert(size() >= 1);
 
 		return _container.back();
 	}
 
-public: // ÈİÁ¿
+public: // å®¹é‡
 	[[nodiscard]] bool empty() const { return _container.empty(); }
 
 	[[nodiscard]] size_type size() const { return _container.size(); }
 
-public: //ĞŞ¸ÄÆ÷
-// ÔªËØÈëÕ»
-	Stack &push(const value_type &value) {
+public: //ä¿®æ”¹å™¨
+		// å…ƒç´ å…¥æ ˆ
+	stack &push(const value_type &value)
+	{
 		_container.push_back(value);
 
 		return *this;
 	}
-	Stack &push(value_type &&value) {
+	stack &push(value_type &&value)
+	{
 		_container.push_back(std::move(value));
 
 		return *this;
 	}
 
-	// ÔÚÕ»¶¥Ô­Î»¹¹ÔìÔªËØ
-	template <typename ...Args>
-	Stack &emplace(Args &&...args) {
+	// åœ¨æ ˆé¡¶åŸä½æ„é€ å…ƒç´ 
+	template <typename... Args>
+	stack &emplace(Args &&... args)
+	{
 		_container.emplace_back(std::forward<Args>(args)...);
 
 		return *this;
 	}
 
-	// ÔªËØ³öÕ»
-	Stack &pop() {
+	// å…ƒç´ å‡ºæ ˆ
+	stack &pop()
+	{
 		assert(size() >= 1);
 
 		_container.pop_back();
@@ -132,34 +144,35 @@ public: //ĞŞ¸ÄÆ÷
 		return *this;
 	}
 
-	// Óë other ½»»»µ×²ãÈİÆ÷
-	Stack &swap(Stack &other) noexcept(std::is_nothrow_swappable_v<container_type>) {
+	// ä¸ other äº¤æ¢åº•å±‚å®¹å™¨
+	stack &swap(stack &other) noexcept(std::is_nothrow_swappable_v<container_type>)
+	{
 		_swap_adl(_container, other._container);
 
 		return *this;
 	}
 
 private:
-	container_type _container{};	// µ×²ãÈİÆ÷
-}; // class Stack<>
+	container_type _container{}; // åº•å±‚å®¹å™¨
+};								 // class Stack<>
 
-
-// swap() µÄ Stack ÌØ»¯
-template <typename Ty, typename Container> inline
-void swap(Stack<Ty, Container> &left, Stack<Ty, Container> &right)
-	noexcept(noexcept(left.swap(right)))
+// swap() çš„ stack ç‰¹åŒ–
+template <typename Ty, typename Container>
+inline void swap(stack<Ty, Container> &left, stack<Ty, Container> &right) noexcept(noexcept(left.swap(right)))
 {
 	left.swap(right);
 }
 
 } // namespace ds
 
+namespace std
+{
 
-namespace std {
-
-// uses_allocator() µÄ Stack ÌØ»¯
+// uses_allocator() çš„ stack ç‰¹åŒ–
 template <typename Ty, typename Container, typename Alloc>
-struct uses_allocator<ds::Stack<Ty, Container>, Alloc>
-	: uses_allocator<Container, Alloc>::type {};
+struct uses_allocator<ds::stack<Ty, Container>, Alloc>
+	: uses_allocator<Container, Alloc>::type
+{
+};
 
 } // namespace std
