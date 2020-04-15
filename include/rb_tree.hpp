@@ -132,6 +132,7 @@ bool operator!=(const _rb_tree_const_iterator<Ty> &left, const _rb_tree_const_it
     return !(left == right);
 }
 
+// 红黑树
 template <typename Ty>
 class rb_tree
 {
@@ -157,7 +158,7 @@ private:
         _node *right = _null;
     };
 
-public:
+public: // 构造函数
     template <typename InputIt>
     rb_tree(InputIt first, InputIt last)
     {
@@ -172,6 +173,7 @@ public:
     rb_tree operator=(rb_tree &&) = delete;
 
 private:
+    // 释放内存
     void _free_node(_node *node)
     {
         if (node == _null)
@@ -189,6 +191,7 @@ public:
     }
 
 private:
+    // 左旋
     void _left_rotate(_node *node)
     {
         //   |            |
@@ -216,7 +219,8 @@ private:
         right->left = node;
         node->parent = right;
     }
-
+    
+    // 右旋
     void _right_rotate(_node *node)
     {
         //     |           |
@@ -335,6 +339,7 @@ private:
     }
 
 public:
+    // 插入元素
     void insert(const value_type &e)
     {
         if (_root == _null)
@@ -498,6 +503,7 @@ private:
     }
 
 public:
+    // 删除元素
     const_iterator erase(const_iterator it)
     {
         assert(!it._is_end);
@@ -528,7 +534,8 @@ public:
         }
         return end();
     }
-
+    
+    // 迭代器
     [[nodiscard]] const_iterator begin()
     {
         if (_root == _null)
@@ -565,7 +572,7 @@ typename rb_tree<Ty>::_node *rb_tree<Ty>::_null = &_null_node;
 template <typename Ty>
 typename _rb_tree_const_iterator<Ty>::_node *_rb_tree_const_iterator<Ty>::_null = rb_tree<Ty>::_null;
 
-// 推倒指引
+// 推导指引
 template <typename InputIt>
 rb_tree(InputIt, InputIt)->rb_tree<typename std::iterator_traits<InputIt>::value_type>;
 
