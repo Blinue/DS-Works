@@ -29,7 +29,7 @@ void test_seq_list()
 {
     std::cout << "-------- seq_list --------" << std::endl;
 
-    auto list = ds::seq_list<int>({1, 2, 3});
+    ds::seq_list<int> list({1, 2, 3});
     list.push_back(0);
     list.erase(list.begin() + 1, list.begin() + 3);
 
@@ -46,7 +46,7 @@ void test_stack()
 {
     std::cout << "-------- stack --------" << std::endl;
 
-    auto stack = ds::stack<int, ds::seq_list<int>>();
+    ds::stack<int, ds::seq_list<int>> stack;
     stack.push(1);
     stack.pop();
     stack.emplace(2);
@@ -58,8 +58,8 @@ void test_avl_tree()
 {
     std::cout << "-------- avl_tree --------" << std::endl;
 
-    auto arr = std::array<int, 5>({1, 3, 2, 1, 0});
-    auto tree = ds::avl_tree<int>(arr.begin(), arr.end());
+    std::array<int, 5> arr({1, 3, 2, 1, 0});
+    ds::avl_tree<int> tree(arr.begin(), arr.end());
 
     tree[0];
     tree.erase(3);
@@ -72,7 +72,7 @@ void test_b_tree()
 {
     std::cout << "-------- b_tree --------" << std::endl;
 
-    auto tree = ds::b_tree<int, 3>();
+    ds::b_tree<int, 3> tree;
     for (int i = 0; i < 10; ++i)
     {
         tree.insert(i * 3 % 11);
@@ -89,8 +89,8 @@ void test_rb_tree()
 {
     std::cout << "-------- rb_tree --------" << std::endl;
 
-    auto arr = std::array<int, 5>({1, 3, 2, 1, 0});
-    auto tree = ds::rb_tree<int>(arr.begin(), arr.end());
+    std::array<int, 5> arr({1, 3, 2, 1, 0});
+    ds::rb_tree<int> tree(arr.begin(), arr.end());
 
     for (int i : tree)
     {

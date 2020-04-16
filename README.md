@@ -14,7 +14,7 @@
 
 ``` c++
 // 顺序表
-auto list = ds::seq_list({5, 1, 2, 3});
+ds::seq_list list({5, 1, 2, 3});
 std::sort(list.begin(), list.end());
 
 for (int i : list)
@@ -24,7 +24,7 @@ for (int i : list)
 // 输出：1 2 3 5
 
 // 红黑树
-auto tree = ds::rb_tree(list.rbegin(), list.rend());
+ds::rb_tree tree(list.rbegin(), list.rend());
 
 std::cout << "\n"
           << std::distance(tree.begin(), tree.find(5));
